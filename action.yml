@@ -1,0 +1,39 @@
+name: 'Github Actions Package'
+description: 'Action for getting information from package.json file'
+branding:
+  icon: 'archive'
+  color: 'yellow'
+
+inputs:
+  path:
+    description: 'Path to package.json file'
+    required: false
+    default: ./
+
+outputs:
+  name:
+    description: 'Package name'
+
+  version:
+    description: 'Package version'
+
+  description:
+    description: 'Package description'  
+
+  main:
+    description: 'Package main'  
+
+  scripts:
+    description: 'Package scripts'  
+
+  keywords:
+    description: 'Package keywords'  
+
+  author:
+    description: 'Package author'  
+
+  license:
+    description: 'Package license'  
+runs:
+  using: 'node16'
+  main: 'dist/index.js'

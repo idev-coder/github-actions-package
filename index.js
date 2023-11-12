@@ -1,0 +1,44 @@
+// import fs from 'fs';
+// import { join } from 'path';
+const fs = require('fs');
+const { join } = require('path');
+const core = require('@actions/core');
+
+/**
+ * Read package.json file
+ * @param {string} path
+ * @returns {object}
+ */
+const readPackageJson = function (path) {
+    const packageJson = fs.readFileSync(join(path, 'package.json')).toString();
+
+    return JSON.parse(packageJson);
+};
+
+try {
+    /**
+     * Path to directory with package.json file
+     * @type {string}
+     */
+    const path = core.getInput('path');
+
+    /**
+     * Get data from package.json file
+     * @type {object}
+     */
+    const packageInfo = readPackageJson(path);
+    let keys = Object.keys(packageInfo)
+
+    /**
+     * Detect if version is a release candidate 
+     * @type {string}
+     */
+    for (let index = 0; index < keys.length; index++) {
+        let key = keys[index];
+        
+        core.setOutput(key, packageInfo[key]);
+
+    }
+} catch (error) {
+    core.setFailed(error.message);
+}
